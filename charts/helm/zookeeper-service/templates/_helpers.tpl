@@ -469,7 +469,7 @@ Usage example:
 {{- end }}
 
 {{- define "zookeeper-service.monitoredImages" -}}
-  {{- printf "deployment %s-service-operator zookeeper-service-operator %s, " (include "zookeeper.name" .) (include "zookeeper-service.findImage" (list . "zookeeper-service")) -}}
+  {{- printf "deployment %s-service-operator zookeeper-service-operator %s, " (include "zookeeper.name" .) (include "zookeeper-service.findImage" (list . "zookeeper-service-operator")) -}}
   {{- if gt (int (include "zookeeper.replicas" .)) 0 -}}
     {{- printf "deployment %s-1 zookeeper %s, " (include "zookeeper.name" .) (include "zookeeper-service.findImage" (list . "docker-zookeeper")) -}}
   {{- end -}}
