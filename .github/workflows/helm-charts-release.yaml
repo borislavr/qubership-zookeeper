@@ -116,7 +116,7 @@ jobs:
       dry-run: ${{ inputs.dry-run }}
       component: ${{ needs.load-docker-build-components.outputs.component }}
       platforms: ${{ needs.load-docker-build-components.outputs.platforms }}
-      tags: ${{ needs.chart-release.outputs.image-version }}
+      tags: "${{ needs.chart-release.outputs.image-version }},latest"
 
   github-release:
     needs: [chart-release,docker-build]
