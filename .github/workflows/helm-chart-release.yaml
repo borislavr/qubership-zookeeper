@@ -1,6 +1,6 @@
 ---
 
-name: Helm Charts Release
+name: Helm Charts Release v2
 on:
   workflow_dispatch:
     inputs:
@@ -137,7 +137,7 @@ jobs:
     uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@main
     with:
       version: ${{ inputs.release }}
-      publish: true
+      publish: false
 #  upload-assets:
 #    needs: [github-release]
 #    runs-on: ubuntu-latest
