@@ -31,6 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   load-docker-build-components:
+    needs: [check-tag]
     runs-on: ubuntu-latest
     outputs:
       component: ${{ steps.load_component.outputs.components }}
@@ -63,6 +64,7 @@ jobs:
         fi
         echo "components=${components}" >> $GITHUB_OUTPUT
         echo "platforms=${platforms}" >> $GITHUB_OUTPUT
+
   docker-check-build:
     needs: [load-docker-build-components]
     runs-on: ubuntu-latest
