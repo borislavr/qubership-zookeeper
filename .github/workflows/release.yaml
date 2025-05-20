@@ -65,7 +65,7 @@ jobs:
         echo "platforms=${platforms}" >> $GITHUB_OUTPUT
 
 
-  chart-release:
+  chart-release-prepare:
     needs: [check-tag,load-docker-build-components]
     runs-on: ubuntu-latest
     outputs:
@@ -87,7 +87,7 @@ jobs:
         run: |
           echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
   tag:
-    needs: [chart-release]
+    needs: [chart-release-prepare]
     runs-on: ubuntu-latest
     steps:
       - name: Create release tag
@@ -98,7 +98,7 @@ jobs:
           create-tag: true
           check-tag: false  
   docker-build:
-    needs: [tag, chart-release, load-docker-build-components]
+    needs: [tag, chart-release-prepare, load-docker-build-components]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -120,43 +120,44 @@ jobs:
 #          tags: "${{ env.IMAGE_VERSION }},latest"
 #        env:
 #          GITHUB_TOKEN: ${{ github.token }}
-  github-release:
-    needs: [docker-build]
-    uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@main
-    with:
-      version: ${{ inputs.release }}
-      publish: true
-  upload-assets:
-    needs: [github-release]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        ref: v${{ inputs.release }}
+#  github-release:
+#    needs: [docker-build]
+#    uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@main
+#    with:
+#      version: ${{ inputs.release }}
+#      publish: true
+#  upload-assets:
+#    needs: [github-release]
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v4
+#      with:
+#        ref: v${{ inputs.release }}
 
-    - name: Archive and Upload Assets
-      uses: netcracker/qubership-workflow-hub/actions/archive-and-upload-assets@main
-      with:
-        config-path: './.github/assets-config.yml'
-        dist-path: './dist'
-        upload: true
-        ref: v${{ inputs.release }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  charts-indexing:
-    needs: [upload-assets]
+#    - name: Archive and Upload Assets
+#      uses: netcracker/qubership-workflow-hub/actions/archive-and-upload-assets@main
+#      with:
+#        config-path: './.github/assets-config.yml'
+#        dist-path: './dist'
+#        upload: true
+#        ref: v${{ inputs.release }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  charts-release:
+    needs: [docker-build]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        ref: release-${{ inputs.release }}
     - name: Run chart-releaser
       uses: borislavr/chart-releaser-action@main
       with:
         charts_dir: charts/helm
-        skip_packaging: true
-        skip_existing: true
+        #skip_packaging: true
+        #skip_existing: true
       env:
         CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
