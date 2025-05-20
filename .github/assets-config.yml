@@ -1,7 +1,7 @@
 archives:
   - source: charts
     outputName: zookeeper-service
-    archiveType: tgz
+    archiveType: tar.gz
   - source: docs
     outputName: docs
     archiveType: tar.gz
