@@ -1,7 +1,7 @@
 archives:
   - source: charts
-    outputName: helm-charts
-    archiveType: tar.gz
+    outputName: zookeeper-service
+    archiveType: tgz
   - source: docs
     outputName: docs
-    archiveType: tar
+    archiveType: tar.gz
