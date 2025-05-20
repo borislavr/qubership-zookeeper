@@ -109,17 +109,17 @@ jobs:
         id: get-version
         run: |
           echo "IMAGE_VERSION=${{ fromJson(needs.chart-release.outputs.images-versions)[matrix.component.name] || inputs.release }}" >> $GITHUB_ENV
-      - name: Docker build
-        uses: netcracker/qubership-workflow-hub/actions/docker-action@main
-        with:
-          ref: v${{ inputs.release }}
-          download-artifact: false
-          dry-run: false
-          component: ${{ toJson(matrix.component) }}
-          platforms: ${{ needs.load-docker-build-components.outputs.platforms }}
-          tags: "${{ env.IMAGE_VERSION }},latest"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+#      - name: Docker build
+#        uses: netcracker/qubership-workflow-hub/actions/docker-action@main
+#        with:
+#          ref: v${{ inputs.release }}
+#          download-artifact: false
+#          dry-run: false
+#          component: ${{ toJson(matrix.component) }}
+#          platforms: ${{ needs.load-docker-build-components.outputs.platforms }}
+#          tags: "${{ env.IMAGE_VERSION }},latest"
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
   github-release:
     needs: [docker-build]
     uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@main
