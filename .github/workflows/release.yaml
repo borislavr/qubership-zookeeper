@@ -65,15 +65,16 @@ jobs:
         echo "platforms=${platforms}" >> $GITHUB_OUTPUT
   docker-check-build:
     needs: [load-docker-build-components]
-    uses: netcracker/qubership-workflow-hub/.github/workflows/docker-publish.yml@main
-    with:
-      ref: ${{ github.ref }}
-      download-artifact: false
-      dry-run: true
-      component: ${{ needs.load-docker-build-components.outputs.component }}
-      platforms: ${{ needs.load-docker-build-components.outputs.platforms }}
-      tags: "test-${{ inputs.release }}"
-
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        component: ${{ fromJson(needs.load-docker-build-components.outputs.component) }}
+    steps:
+      - name: Get version for current component
+        id: get-version
+        run: |
+          echo "IMAGE_VERSION=${{ fromJson(needs.chart-release.outputs.images-versions)[matrix.component.name] || inputs.release }}" >> $GITHUB_ENV
   chart-release-prepare:
     needs: [check-tag,load-docker-build-components,docker-check-build]
     runs-on: ubuntu-latest
