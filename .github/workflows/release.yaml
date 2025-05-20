@@ -31,7 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   load-docker-build-components:
-    needs: [check-tag]
     runs-on: ubuntu-latest
     outputs:
       component: ${{ steps.load_component.outputs.components }}
@@ -128,7 +127,7 @@ jobs:
       version: ${{ inputs.release }}
       publish: true
   upload-assets:
-    needs: [chart-release]
+    needs: [github-release]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
