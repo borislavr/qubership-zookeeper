@@ -1,6 +1,6 @@
 ---
 
-name: Helm Charts Release v2
+name: Helm Charts Release
 on:
   workflow_dispatch:
     inputs:
@@ -157,19 +157,32 @@ jobs:
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   charts-release:
-    needs: [docker-build]
+    needs: [github-release]
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        ref: release-${{ inputs.release }}
-    - name: Run chart-releaser
-      uses: borislavr/chart-releaser-action@main
-      with:
-        charts_dir: charts/helm
-        #skip_packaging: true
-        #skip_existing: true
-      env:
-        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#      - name: "Prepare app token"
+#        uses: actions/create-github-app-token@v1
+#        id: app-token
+#        with:
+#          app-id: ${{ vars.GH_BUMP_VERSION_APP_ID }}
+#          private-key: ${{ secrets.GH_BUMP_VERSION_APP_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: release-${{ inputs.release }}
+#          token: ${{ steps.app-token.outputs.token }}
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Run chart-releaser
+        uses: borislavr/chart-releaser-action@main
+        with:
+          charts_dir: charts/helm
+          #skip_packaging: true
+          #skip_existing: true
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
