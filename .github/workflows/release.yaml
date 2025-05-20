@@ -31,7 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   load-docker-build-components:
-    needs: [check-tag]
     runs-on: ubuntu-latest
     outputs:
       component: ${{ steps.load_component.outputs.components }}
@@ -76,7 +75,7 @@ jobs:
       - name: Get version for current component
         id: get-version
         run: |
-          echo "IMAGE_VERSION=${{ fromJson(needs.chart-release.outputs.images-versions)[matrix.component.name] || inputs.release }}" >> $GITHUB_ENV
+          echo "IMAGE=${{ matrix.component.name }}" >> $GITHUB_ENV
   chart-release-prepare:
     needs: [check-tag,load-docker-build-components,docker-check-build]
     runs-on: ubuntu-latest
@@ -120,7 +119,7 @@ jobs:
       - name: Get version for current component
         id: get-version
         run: |
-          echo "IMAGE_VERSION=${{ fromJson(needs.chart-release.outputs.images-versions)[matrix.component.name] || inputs.release }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSION=${{ fromJson(needs.chart-release-prepare.outputs.images-versions)[matrix.component.name] || inputs.release }}" >> $GITHUB_ENV
 
 #      - name: Docker build
 #        uses: netcracker/qubership-workflow-hub/actions/docker-action@main
