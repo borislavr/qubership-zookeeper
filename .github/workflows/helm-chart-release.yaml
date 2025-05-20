@@ -136,8 +136,9 @@ jobs:
     needs: [docker-build]
     uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@main
     with:
-      version: ${{ inputs.release }}
+      version: "v${{ inputs.release }}"
       publish: false
+      ref: "v${{ inputs.release }}"
 #  upload-assets:
 #    needs: [github-release]
 #    runs-on: ubuntu-latest
