@@ -151,8 +151,16 @@ jobs:
 #        ref: v${{ inputs.release }}
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  charts-release:
+  github-release:
     needs: [docker-build]
+    uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@feature/release-drafter-ref
+    with:
+      version: "v${{ inputs.release }}"
+      publish: false
+      ref: "v${{ inputs.release }}"
+      tag: "v${{ inputs.release }}"
+  charts-release:
+    needs: [github-release]
     runs-on: ubuntu-latest
     steps:
 #      - name: "Prepare app token"
@@ -181,11 +189,3 @@ jobs:
           #skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  github-release:
-    needs: [charts-release]
-    uses: netcracker/qubership-workflow-hub/.github/workflows/release-drafter.yml@feature/release-drafter-ref
-    with:
-      version: "v${{ inputs.release }}"
-      publish: true
-      ref: "v${{ inputs.release }}"
-      tag: "v${{ inputs.release }}"
