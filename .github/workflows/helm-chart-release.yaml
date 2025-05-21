@@ -175,12 +175,9 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Run chart-releaser
-        uses: borislavr/chart-releaser-action@main
+        uses: borislavr/chart-releaser-action@v0.0.1
         with:
           charts_dir: charts/helm
-          draft_release: false
-          #skip_packaging: true
-          #skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
       - name: "Release-drafter"
