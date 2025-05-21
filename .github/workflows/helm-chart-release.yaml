@@ -187,7 +187,7 @@ jobs:
         uses: release-drafter/release-drafter@v6.1.0
         with:
           config-name: release-drafter-config.yml
-          #publish: ${{ inputs.publish }}
+          publish: true
           name: ${{ inputs.release }}
           tag: v${{ inputs.release }}
           version: v${{ inputs.release }}
