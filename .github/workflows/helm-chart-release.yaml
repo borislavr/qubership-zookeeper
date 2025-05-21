@@ -190,5 +190,3 @@ jobs:
       publish: true
       ref: "v${{ inputs.release }}"
       tag: "v${{ inputs.release }}"
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
