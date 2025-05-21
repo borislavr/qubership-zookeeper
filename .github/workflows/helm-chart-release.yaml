@@ -181,7 +181,7 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
       - name: "Release-drafter"
-        uses: release-drafter/release-drafter@v6.1.0
+        uses: borislavr/release-drafter@master
         with:
           config-name: release-drafter-config.yml
           publish: true
