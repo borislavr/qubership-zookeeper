@@ -65,7 +65,7 @@ jobs:
         echo "platforms=${platforms}" >> $GITHUB_OUTPUT
 
   docker-check-build:
-    needs: [load-docker-build-components]
+    needs: [load-docker-build-components,check-tag]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -153,6 +153,7 @@ jobs:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   charts-release:
     needs: [tag]
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
 #      - name: "Prepare app token"
