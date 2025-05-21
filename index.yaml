@@ -3,6 +3,16 @@ entries:
   zookeeper-service:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-05-21T11:57:33.933592505Z"
+    description: A Helm chart for Kubernetes
+    digest: 675d8f7c94f687698320320ef4ae720b4fac1d1faee0f2b2fcf6e6e767ce9994
+    name: zookeeper-service
+    type: application
+    urls:
+    - https://github.com/borislavr/qubership-zookeeper/releases/download/v0.1.10/zookeeper-service-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-05-21T11:44:03.391427256Z"
     description: A Helm chart for Kubernetes
     digest: 75553eb8380bf950a9031fc616fad04edfe4b12a112013f6824d79ebd1da1165
@@ -91,4 +101,4 @@ entries:
     urls:
     - https://github.com/borislavr/qubership-zookeeper/releases/download/v0.1.1/zookeeper-service-0.1.1.tgz
     version: 0.1.1
-generated: "2025-05-21T11:44:03.391476998Z"
+generated: "2025-05-21T11:57:33.933636367Z"
