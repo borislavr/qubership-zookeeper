@@ -152,7 +152,7 @@ jobs:
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   charts-release:
-    needs: [docker-build]
+    needs: [tag]
     runs-on: ubuntu-latest
     steps:
 #      - name: "Prepare app token"
