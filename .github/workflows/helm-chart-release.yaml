@@ -164,6 +164,7 @@ jobs:
         uses: netcracker/chart-releaser-action@main
         with:
           charts_dir: charts/helm
+          release_name_template: "v{{ .Version }}"
         env:
           CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
 
