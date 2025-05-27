@@ -166,7 +166,7 @@ jobs:
           charts_dir: charts/helm
           release_name_template: "v{{ .Version }}"
         env:
-          CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Release-drafter"
         uses: netcracker/release-drafter@master
