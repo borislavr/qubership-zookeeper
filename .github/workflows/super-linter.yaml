@@ -77,15 +77,15 @@ jobs:
       shell: bash
       run: |
         # shellcheck disable=2086
-        if [ -f "/tmp/linter-config/linters/super-linter.env" ]; then
-          echo "❕ Applying common linter environment:"
-          grep "\S" /tmp/linter-config/linters/super-linter.env | grep -v "^#"
-          grep "\S" /tmp/linter-config/linters/super-linter.env | grep -v "^#" >> $GITHUB_ENV
-        fi
         if [ -f "${GITHUB_WORKSPACE}/.github/super-linter.env" ]; then
-          echo "❕ Applying local linter environment:"
+          echo "::info:: Applying local linter environment:"
           grep "\S" ${GITHUB_WORKSPACE}/.github/super-linter.env | grep -v "^#"
           grep "\S" ${GITHUB_WORKSPACE}/.github/super-linter.env | grep -v "^#" >> $GITHUB_ENV
+        elif [ -f "/tmp/linter-config/linters/super-linter.env" ]; then
+          echo "::info:: Local linter environment file not found"
+          echo "::info:: Applying common linter environment:"
+          grep "\S" /tmp/linter-config/linters/super-linter.env | grep -v "^#"
+          grep "\S" /tmp/linter-config/linters/super-linter.env | grep -v "^#" >> $GITHUB_ENV
         fi
 
     - name: Lint Code Base
