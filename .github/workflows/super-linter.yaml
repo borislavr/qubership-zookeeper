@@ -35,7 +35,7 @@ jobs:
     - name: "Get the common linters configuration"
       uses: actions/checkout@v4
       with:
-        ref: fix/superlinter-config
+        ref: main # fix/superlinter-config
         repository: netcracker/.github
         sparse-checkout: |
           config/linters
