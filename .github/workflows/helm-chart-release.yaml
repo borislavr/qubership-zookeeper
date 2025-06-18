@@ -169,7 +169,7 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Release-drafter"
-        uses: netcracker/release-drafter@master
+        uses: netcracker/release-drafter@fix/tagged-release
         with:
           config-name: release-drafter-config.yml
           publish: true
