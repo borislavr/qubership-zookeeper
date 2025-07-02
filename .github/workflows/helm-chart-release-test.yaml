@@ -1,0 +1,38 @@
+---
+
+name: Helm Charts Release v3
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release version'
+        required: true
+        type: string
+permissions:
+  contents: write
+  packages: write
+run-name: ${{ github.repository }} Release ${{ github.event.inputs.release }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  chart-release-prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      images-versions: ${{ steps.update-versions.outputs.images-versions }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: "Update versions in values"
+        id: update-versions
+        uses: netcracker/qubership-workflow-hub/actions/helm-charts-release@feature/254
+        with:
+          release-version: ${{ inputs.release }}
+          config-file: .github/helm-charts-release-config.yaml
+        env:
+          ${{ insert }}: ${{ vars }}
+      - name: "Debug"
+        run: |
+          echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
