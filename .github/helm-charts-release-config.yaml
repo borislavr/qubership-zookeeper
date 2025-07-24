@@ -5,7 +5,7 @@ charts:
     chart_file: charts/helm/zookeeper-service/Chart.yaml
     values_file: charts/helm/zookeeper-service/values.yaml
     image:
-      - ghcr.io/netcracker/qubership-zookeeper-operator:#0\.\d+\.4
+      - ghcr.io/netcracker/qubership-zookeeper-operator:#0\.\d+\.4]
       - ghcr.io/netcracker/qubership-docker-zookeeper:${release}
       - ghcr.io/netcracker/qubership-zookeeper-backup-daemon:#latest
       - ghcr.io/netcracker/qubership-zookeeper-integration-tests:${release}-${ZOO_VERSION}
