@@ -10,3 +10,4 @@ charts:
       - ghcr.io/netcracker/qubership-zookeeper-backup-daemon:#latest
       - ghcr.io/netcracker/qubership-zookeeper-integration-tests:${release}-${ZOO_VERSION}
       - ghcr.io/netcracker/qubership-disaster-recovery-daemon:#latest
+      - ghcr.io/netcracker/qubership-test-image:${release}
