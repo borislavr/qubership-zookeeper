@@ -36,11 +36,16 @@ jobs:
 #          ${{ insert }}: ${{ vars }}
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          GITHUB_ACTOR: ${{ github.actor }}
-      - name: Add vars to env
+
+# Adding all github.vars to github.env context
+      - name: Prepare vars
+        id: vars
         run: |
-          for var in $(echo "${{ toJson(vars) }}" | jq -c '.'); do
-            echo "${var}"
-          done
+          VARS_JSON='''
+          ${{ toJson(vars) }}
+          '''
+          echo "${VARS_JSON}" | jq -r 'to_entries|map("echo \"\(.key)=\(.value)\"")|.[]' >> $GITHUB_ENV
+
       - name: "Debug"
         #env: ${{ toJson(vars)[*] }}
         run: |
