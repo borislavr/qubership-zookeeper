@@ -25,17 +25,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: "Update versions in values"
-        id: update-versions
-        uses: netcracker/qubership-workflow-hub/actions/charts-values-update-action@feature/chart-values-update-action-log
-        with:
-          release-version: ${{ inputs.release }}
-          config-file: .github/helm-charts-release-config.yaml
-          create-release-branch: 'false'
-        env:
-          ${{ insert }}: ${{ vars }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
+#      - name: "Update versions in values"
+#        id: update-versions
+#        uses: netcracker/qubership-workflow-hub/actions/charts-values-update-action@feature/chart-values-update-action-log
+#        with:
+#          release-version: ${{ inputs.release }}
+#          config-file: .github/helm-charts-release-config.yaml
+#          create-release-branch: 'false'
+#        env:
+#          ${{ insert }}: ${{ vars }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_ACTOR: ${{ github.actor }}
       - name: "Debug"
         run: |
-          echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
+          # echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
+          echo "Environment: ${{ toJson(env) }}"
+          echo "Variables: ${{ toJson(vars) }}"
