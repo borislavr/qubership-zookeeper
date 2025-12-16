@@ -39,11 +39,9 @@ jobs:
 
 # Adding all github.vars to github.env context
       - name: Prepare vars
-        id: vars
+        env:
+          VARS_JSON: '${{ toJson(vars) }}'
         run: |
-          VARS_JSON='''
-          ${{ toJson(vars) }}
-          '''
           echo "${VARS_JSON}" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
 
       - name: "Debug-01"
