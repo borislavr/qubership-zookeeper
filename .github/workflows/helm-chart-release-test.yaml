@@ -36,9 +36,13 @@ jobs:
 #          ${{ insert }}: ${{ vars }}
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          GITHUB_ACTOR: ${{ github.actor }}
-      
+      - name: Add vars to env
+        run: |
+          for var in $(echo "${{ toJson(vars) }}" | jq -c '.'); do
+            echo "${var}"
+          done
       - name: "Debug"
-        env: ${{ toJson(vars)[*] }}
+        #env: ${{ toJson(vars)[*] }}
         run: |
           # echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
           echo "Environment: ${{ toJson(env) }}"
