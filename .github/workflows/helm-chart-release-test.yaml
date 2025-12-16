@@ -44,7 +44,7 @@ jobs:
           VARS_JSON='''
           ${{ toJson(vars) }}
           '''
-          echo "${VARS_JSON}" | jq -r 'to_entries|map("echo \"\(.key)=\(.value)\"")|.[]' >> $GITHUB_ENV
+          echo "${VARS_JSON}" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
 
       - name: "Debug"
         #env: ${{ toJson(vars)[*] }}
