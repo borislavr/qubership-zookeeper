@@ -46,9 +46,18 @@ jobs:
           '''
           echo "${VARS_JSON}" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
 
-      - name: "Debug"
-        #env: ${{ toJson(vars)[*] }}
+      - name: "Debug-01"
         run: |
-          # echo "Images versions: ${{ steps.update-versions.outputs.images-versions }}"
           echo "Environment: ${{ toJson(env) }}"
           echo "Variables: ${{ toJson(vars) }}"
+      - name: "Debug-02"
+        run: |
+          echo "Direct insertion of env.variables:"
+          echo "ZOO_VERSION: ${{ env.ZOO_VERSION }}"
+          echo "VARIABLE_1: ${{ env.VARIABLE_1 }}"
+          echo "VARIABLE_2: ${{ env.VARIABLE_2 }}"
+
+          echo "Insert env.variables as bash vars:"
+          echo "ZOO_VERSION=${ZOO_VERSION}"
+          echo "VARIABLE_1=${VARIABLE_1}"
+          echo "VARIABLE_2=${VARIABLE_2}"
