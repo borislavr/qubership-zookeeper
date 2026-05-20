@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   ci:
-    uses: borislavr/qubership-zookeeper/.github/workflows/re-go-ci.yml@main
+    uses: borislavr/qubership-zookeeper/.github/workflows/re-go-ci.yaml@main
     with:
       working-directory: "."
       go-version: "1.23"
