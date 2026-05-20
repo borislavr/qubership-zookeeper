@@ -27,6 +27,9 @@ concurrency:
 
 jobs:
   ci:
+    permissions:
+      contents: read
+      packages: read
     uses: borislavr/qubership-zookeeper/.github/workflows/re-go-ci.yaml@main
     with:
       working-directory: "."
